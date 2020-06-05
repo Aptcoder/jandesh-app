@@ -1,0 +1,38 @@
+const express = require('express');
+const Link = require('../models/link')
+const {ErrorHandler} = require('../utils/error');
+
+let router = express.Router();
+
+router.get('/:link',(req,res) => {
+    let link = req.params.link;
+
+    Link.findOne({link : link})
+        .then((link) => {
+            if(!link){
+                return next(new ErrorHandler(404,'link not found'));
+            }
+            res.send({
+                link
+            })
+        })
+        .catch((err) => {
+            console.log('Error finding link',err);
+            next(err);
+        })
+})
+
+
+
+router.post('/upload',upload.none(),(req,res) => {
+    let newLink = new Link({
+        html : req.body.html
+    })
+    newLink.save().then((link) => {
+        res.send({
+            link
+        })
+    }).catch(err => {
+        console.log('error no dey tire you' + err)
+    })
+})
