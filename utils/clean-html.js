@@ -1,6 +1,7 @@
 
-/*
-    @params html -string- html string to be cleaned up before sending response
+/**
+* @param {string} html - html string to be cleaned up before sending response
+* @return {string} string - the cleaned up html
 */
 module.exports = (html) => {
     let regEx = /\n/gi

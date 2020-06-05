@@ -4,3 +4,4 @@ let string = html.replace(regEx,"");
 let status = regEx.test(string)
 console.log(string);
 console.log(status);
+

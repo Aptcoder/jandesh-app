@@ -1,6 +1,7 @@
 const express = require('express');
 const Link = require('../models/link')
 const {ErrorHandler} = require('../utils/error');
+const cleanHTML = require('../utils/clean-html');
 
 let router = express.Router();
 
@@ -13,7 +14,7 @@ router.get('/:link',(req,res) => {
                 return next(new ErrorHandler(404,'link not found'));
             }
             res.send({
-                link
+                html : cleanHTML(link.html)
             })
         })
         .catch((err) => {

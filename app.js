@@ -3,22 +3,20 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require('path');
-require('./models/db');
+const multer = require('multer');
+let upload = multer();
+
+
 
 
 //my modules
 const Link = require('./models/link')
 const {ErrorHandler,HandleError} = require('./utils/error')
-
-const multer = require('multer');
-let upload = multer();
+require('./models/db');
 
 
 const app = express();
-
-
 app.use(bodyParser.json());
-
 
 //get the path for rendering files 
 let public = path.join(__dirname,'public');
@@ -28,19 +26,9 @@ app.get('/',(req,res) => {
     res.sendFile(path.join(public,'index.html'))
 })
 
-app.post('/upload',upload.none(),(req,res) => {
-    let newLink = new Link({
-        html : req.body.html
-    })
-    
-    newLink.save().then((link) => {
-        res.send({
-            link
-        })
-    }).catch(err => {
-        console.log('error no dey tire you' + err)
-    })
-})
+
+
+
 
 //error handler - express
 app.use((req,res,next,err) => {
