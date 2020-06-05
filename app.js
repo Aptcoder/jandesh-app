@@ -1,9 +1,16 @@
+//third party modules
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const Link = require('./models/link')
 const path = require('path');
+
+
+// connection uri
 const URI = 'mongodb://localhost:27017/jandesh'
+
+//my modules
+const Link = require('./models/link')
+const {ErrorHandler,HandleError} = require('./utils/error')
 mongoose.connect(URI,{useNewUrlParser: true,useUnifiedTopology: true},(err) => {
     if(err){
         console.log('mongoose could not connect!')
@@ -41,6 +48,25 @@ app.post('/upload',upload.none(),(req,res) => {
     })
 })
 
+//error handler - express
+app.use((req,res,next,err) => {
+    if(err.instanceOf(ErrorHandler)){
+        return HandleError(err,res)
+    }
+    statusCode = err.statusCode || 500;
+    status = err.status || 'error'
+
+    res.status(statusCode).send({
+        message : err.message,
+        status : status
+    })
+
+})
+
+// fall back for route not found
+app.use('*',(req,res) => {
+    res.send('<h2>Page not found!</h2>')
+})
 
 app.listen(3000,() => {
     console.log('node is listening in port 3000')
