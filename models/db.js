@@ -1,11 +1,10 @@
 const mongoose = require('mongoose');
 
-// connection uri
-const URI = 'mongodb://localhost:27017/jandesh'
-
+const environment = process.env.NODE_ENV || 'development';
+const stage = require('../config')[environment];
 
 //make mongoose connection
-mongoose.connect(URI,
+mongoose.connect(stage.MONGODB_URI,
     {useNewUrlParser: true,
     useUnifiedTopology: true})
     .then(() => {
