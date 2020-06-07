@@ -12,3 +12,9 @@ let HandleError = (err,res) => {
         status : 'error'
     })
 }
+
+
+module.exports = {
+    HandleError,
+    ErrorHandler
+}

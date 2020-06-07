@@ -12,6 +12,7 @@ let upload = multer();
 //my modules
 const Link = require('./models/link')
 const {ErrorHandler,HandleError} = require('./utils/error')
+const linkRoutes = require('./routes/linkRoutes');
 require('./models/db');
 
 
@@ -27,7 +28,7 @@ app.get('/',(req,res) => {
 })
 
 
-
+app.use('/link',linkRoutes);
 
 
 //error handler - express

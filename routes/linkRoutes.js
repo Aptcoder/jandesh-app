@@ -2,7 +2,8 @@ const express = require('express');
 const Link = require('../models/link')
 const {ErrorHandler} = require('../utils/error');
 const cleanHTML = require('../utils/clean-html');
-
+const multer = require('multer');
+let upload = multer();
 let router = express.Router();
 
 router.get('/:link',(req,res) => {
@@ -31,9 +32,17 @@ router.post('/upload',upload.none(),(req,res) => {
     })
     newLink.save().then((link) => {
         res.send({
-            link
+            'link': 'https://jadedash.netlify.app/q='+link.link 
         })
     }).catch(err => {
         console.log('error no dey tire you' + err)
     })
 })
+
+router.get('/short/:link',(req,res) => {
+    const link = req.params.link;
+    res.setHeader('x-link',link);
+    res.status(301).redirect('https://jadedash.netlify.app?='+link)
+})
+
+module.exports = router
