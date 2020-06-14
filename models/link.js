@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const randomString = require('randomstring');
+const shortid = require('shortid');
 
 // declare schema for links
 const linkSchema = mongoose.Schema({
@@ -7,7 +7,7 @@ const linkSchema = mongoose.Schema({
         type : String,
         required : true,
         trim : true,
-        default : randomString.generate()
+        default : shortid.generate()
     },
     html : {
         type : String,
