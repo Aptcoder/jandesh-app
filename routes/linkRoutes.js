@@ -32,7 +32,7 @@ router.post('/upload',upload.none(),(req,res) => {
     })
     newLink.save().then((link) => {
         res.send({
-            'link': 'https://jadedash.netlify.app/q='+link.link 
+            'link': 'https://jadedash.netlify.app/editor/q='+link.link 
         })
     }).catch(err => {
         console.log('error no dey tire you' + err)
